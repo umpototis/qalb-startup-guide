@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, Code, Briefcase, Megaphone, DollarSign, ShoppingCart, Scale } from "lucide-react";
 import { Mentor } from "@/types/mentor";
 
 interface MentorCardProps {
@@ -10,22 +10,33 @@ interface MentorCardProps {
   onClick: (mentor: Mentor) => void;
 }
 
+const getFieldIcon = (field: string) => {
+  switch (field.toLowerCase()) {
+    case 'technology & innovation':
+      return Code;
+    case 'business strategy':
+      return Briefcase;
+    case 'marketing & branding':
+      return Megaphone;
+    case 'finance & investment':
+      return DollarSign;
+    case 'e-commerce':
+      return ShoppingCart;
+    case 'legal & compliance':
+      return Scale;
+    default:
+      return Briefcase;
+  }
+};
+
 const MentorCard: React.FC<MentorCardProps> = ({ mentor, onClick }) => {
+  const FieldIcon = getFieldIcon(mentor.field);
+
   return (
     <Card className="h-full flex flex-col overflow-hidden hover:shadow-md transition-shadow">
       <CardHeader className="flex flex-row items-center gap-4 pb-2">
-        <div className="w-16 h-16 rounded-full overflow-hidden bg-primary-light/10 flex items-center justify-center">
-          {mentor.avatar ? (
-            <img 
-              src={mentor.avatar} 
-              alt={mentor.name} 
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <span className="text-2xl font-bold text-primary">
-              {mentor.name.charAt(0)}
-            </span>
-          )}
+        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+          <FieldIcon className="w-8 h-8 text-primary" />
         </div>
         <div>
           <h3 className="text-lg font-semibold">{mentor.name}</h3>
